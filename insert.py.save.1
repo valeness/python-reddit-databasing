@@ -1,0 +1,53 @@
+# Import SQLAlchemy stuff
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from db import Post, Base
+
+# Import PRAW
+import praw
+import time
+
+# Handle ALL Reddit Scraping
+##########
+
+# Reddit Setup
+r = praw.Reddit('Post Databasing Program')
+visited = []
+
+keywords = [
+'program design',
+'praw',
+'study',
+'class',
+'productivity',
+'module',
+'framework',
+'agency',
+'pygame',
+'tkinter',
+'python',
+'C',
+'Unity',
+'programming standard'
+]
+
+pythonsub = r.get_subreddit('python')
+for submission in pythonsub.get_hot(limit=10):
+	submission.replace_more_comments(limit=5, threshold=0)
+	title = submission.title
+	post = submission.selftext.lower()
+	parsed = praw.helpers.flatten_tree(submission.comments)
+	for comment in parsed:
+		comments.append(comment.body)
+		print('<===**===>'
+
+# Prelim setup
+engine = create_engine('sqlite:///praw.db')
+Base.metadata.bind = engine
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
+
+# Actually Add a new post
+#new_post = Post(title='This is a Post')
+#session.add(new_post)
+#session.commit()
